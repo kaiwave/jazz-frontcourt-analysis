@@ -1,0 +1,19 @@
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# IPython history
+.ipython/
+profile_default/history.sqlite
+
+# Virtual environments (highly recommended if you use pip/conda)
+.venv/
+venv/
+env/
+ENV/
+conda-env/
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class

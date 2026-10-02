@@ -1,0 +1,7 @@
+numpy
+scipy
+matplotlib
+nba_api
+pandas
+shapely
+ipykernel
