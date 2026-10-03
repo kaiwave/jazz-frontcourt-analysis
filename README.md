@@ -25,9 +25,15 @@ An NBA defensive analytics framework combining Empirical Bayes modelling with a 
 
 * [x] Write `sample_drive_neighbourhood()` for bivariate normal perturbation around drive coordinates.
 
-* [ ] Write `calc_help_rotation()` and vectorized `calc_rotation_risk()` for the kinematic race.
+* [x] Write `calc_help_rotation()` and vectorized `calc_rotation_risk()` for the kinematic race.
 
-* [ ] Implement `solve_optimal_roam_depth()` using bisection over the $[R_{\text{ra}}, D_{\text{max}}]$ domain.
+* [x] Implement `solve_optimal_roam_depth()` using bisection over the domain.
+
+* [x] Implement `simulate_court_grid()` which evaluates optimal roam depth for each grid point
+
+* [x] Implement `calc_pairing_ev()` to get expected values
+
+* [x] Implement `eval_jazz_frontcourt_pairing()` as a Jazz specific function to evaluate the expected value of a frontcourt pairing. 
 
 * [ ] Implement plotting functions with consistent styling, colourbars, and parameter labels.
 
