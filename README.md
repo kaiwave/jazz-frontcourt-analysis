@@ -21,9 +21,9 @@ An NBA defensive analytics framework combining Empirical Bayes modelling with a 
 
 * [x] Implement `fetch_rim_defense_data()` with automatic CSV caching in `data/`.
 
-* [ ] Implement `fit_empirical_bayes_rim()` using Method of Moments and `scipy.stats.beta`.
+* [x] Implement `fit_empirical_bayes_rim()` using Method of Moments and `scipy.stats.beta`.
 
-* [ ] Write `sample_drive_neighbourhood()` for bivariate normal perturbation around drive coordinates.
+* [x] Write `sample_drive_neighbourhood()` for bivariate normal perturbation around drive coordinates.
 
 * [ ] Write `calc_help_rotation()` and vectorized `calc_rotation_risk()` for the kinematic race.
 
