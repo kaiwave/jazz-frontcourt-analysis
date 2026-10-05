@@ -38,17 +38,22 @@ DATA_DIR:          str = "data"     # Directory to store cached data
 UTA_ID:            int = 1610612747 # Utah Jazz team ID in NBA API
 
 # IDs for Jazz frontcourt players
+JJJ_ID = 1628991  # Jaren Jackson Jr.
+NURKIC_ID = 203994  # Jusuf Nurkić
+MARKKANEN_ID = 1628374  # Lauri Markkanen
 JAZZ_FRONTCOURT_IDS = [
-    1628991,  # Jaren Jackson Jr.
-    203994,   # Jusuf Nurkić
-    1629637,  # Jaxson Hayes
-    1628374,  # Lauri Markkanen
+    JJJ_ID,
+    NURKIC_ID,
+    MARKKANEN_ID,
+    1629637,  # Jaxson Hayes - Note: Played for LAL in this data, so drop him from the Utah highlight
     1642271,  # Kyle Filipowski
 ]
 
-# Custom colormap for Jazz-themed visualisations
+# Custom colormap for Jazz-themed visualizations
 jazz_colors = ['#31006F', '#00A9E0', "#062553"]
 jazz_cmap = ListedColormap(jazz_colors, name='utah_jazz')
+
+# Note... as much as it pains me, I will be sticking to American register and units for this project, since the NBA is an American league and all the data is in imperial units
 
 # ---------------------------------------
 # DATA INGESTION
@@ -63,8 +68,6 @@ def fetch_rim_defense_data(
 
   if not os.path.exists(file_path) or force_refresh:
     try:
-      print(f"Downloading rim defense data for {season} from NBA API...")
-
       response = leaguedashptdefend.LeagueDashPtDefend(
         defense_category = 'Less Than 6Ft',
         season = season,
@@ -75,17 +78,14 @@ def fetch_rim_defense_data(
 
       df = response.get_data_frames()[0] # Get the main leaderboard table from the response
 
-      print("Saving to:", os.path.abspath(file_path))
       df.to_csv(file_path, index=False) # Save to cache
 
       return df
 
     except Exception as e:
-      print(f"Failed to download rim defense data for {season}: {e}")
+      pass
 
   else:
-    print(f"Loading rim defense data for {season} from cache...")
-
     df = pd.read_csv(file_path)
     return df # Return the cached DataFrame
 
@@ -126,7 +126,7 @@ def fit_empirical_bayes_rim(
   return out_df, alpha_0, beta_0, p_mean, kappa
 
 
-def sample_drive_neighbourhood(
+def sample_drive_neighborhood(
     p0: tuple[float, float],
     sigma_x: float = SIGMA_X_DEFAULT,
     sigma_y: float = SIGMA_Y_DEFAULT,
@@ -138,7 +138,7 @@ def sample_drive_neighbourhood(
   return sample_matrix
 
 # ---------------------------------------
-# OPTIMISATION
+# OPTIMIZATION
 # ---------------------------------------
 def calc_help_rotation(
     p0: tuple[float, float],
@@ -166,7 +166,7 @@ def calc_rotation_risk(
 ) -> float:
 
   if samples is None:
-    samples = sample_drive_neighbourhood(p0) # Sample the drive neighbourhood around the defender's position
+    samples = sample_drive_neighborhood(p0) # Sample the drive neighborhood around the defender's position
 
   if len(samples) == 0:
     return 0.0 # No samples -> no risk
@@ -188,7 +188,7 @@ def solve_optimal_roam_depth(
     n_steps: int = 40,
     ):
 
-  samples = sample_drive_neighbourhood(p0)
+  samples = sample_drive_neighborhood(p0)
 
   lower_0 = R_RESTRICTED_AREA + L_REACH
   upper_0 = 23.75 # ft, 3pt line distance from the rim
@@ -216,7 +216,7 @@ def simulate_court_grid(
   x_coords = np.linspace(-25.0, 25.0, grid_resolution)
   y_coords = np.linspace(0.0, 41.75, grid_resolution) # Establish court boundaries
 
-  d_optimal_grid = np.zeros((grid_resolution, grid_resolution)) # Initialise a grid to store optimal roam depths
+  d_optimal_grid = np.zeros((grid_resolution, grid_resolution)) # Initialize a grid to store optimal roam depths
 
   for i, y_coord in enumerate(y_coords):
     for j, x_coord in enumerate(x_coords): # Since its stored as [y,x] in the grid, we need to iterate over y first and then x
@@ -241,7 +241,7 @@ def calc_pairing_ev(
 
 def eval_jazz_frontcourt_pairing( # Jazz specific function to evaluate the expected value of a frontcourt pairing. 
     roam_dfg: float = 0.551,   # JJJ's DFG% < 6ft from 2025-26 season
-    anchor_dfg: float = 0.600, # Nurkic's DFG% < 6ft from 2025-26 season
+    anchor_dfg: float = 0.600, # Nurkić's DFG% < 6ft from 2025-26 season
     eb_df: pd.DataFrame | None = None,
     d_help: float = 20.0
     ) -> pd.DataFrame:
@@ -252,7 +252,7 @@ def eval_jazz_frontcourt_pairing( # Jazz specific function to evaluate the expec
     if not jjj_row.empty:
       roam_dfg = float(jjj_row['post_dfg_pct'].iloc[0])
     if not nurk_row.empty:
-      anchor_dfg = float(nurk_row['post_dfg_pct'].iloc[0]) # Pull the empirical Bayes DFG% for JJJ and Nurkic if available
+      anchor_dfg = float(nurk_row['post_dfg_pct'].iloc[0]) # Pull the empirical Bayes DFG% for JJJ and Nurkić if available
 
   # Model testing spots
   TEST_SPOTS = {
@@ -301,7 +301,7 @@ def eval_jazz_frontcourt_pairing( # Jazz specific function to evaluate the expec
   return pd.DataFrame(rows) # Return the results as a DataFrame
 
 # ---------------------------------------
-# VISUALISATION
+# VISUALIZATION
 # ---------------------------------------
 def draw_nba_halfcourt(
     ax: Axes | None = None,
@@ -451,7 +451,7 @@ def plot_zone_roam_surface(
         y_coords,
         d_optimal_grid,
         levels=levels,
-        cmap="jazz_cmap",
+        cmap=jazz_cmap,
         alpha=0.85,
         extend="both",
         zorder=1,
@@ -471,7 +471,6 @@ def plot_zone_roam_surface(
     ) # Create contour lines for specific optimal roam depth levels
     ax.clabel(cs, inline=True, fontsize=9, fmt="%.0f ft")
 
-    # 4. Colorbar & Titles
     cbar = plt.colorbar(cf, ax=ax, fraction=0.046, pad=0.04)
     cbar.set_label("Max Safe Roaming Depth d* (ft from Rim)", fontsize=10)
 

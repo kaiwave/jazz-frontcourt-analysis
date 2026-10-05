@@ -17,3 +17,6 @@ conda-env/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Distribution
+main.pdf
