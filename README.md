@@ -9,7 +9,7 @@ The compiled report can be found on my cloud [here](https://cloud.kaiwave.dev/s/
 Open `main.ipynb` for the Executive Analytics Brief. It contains the Empirical Bayes rim baselines, roaming-depth heatmaps, and the frontcourt EV table. Rendered figures and the table are also saved in `assets/`.
 
 ## Headline results (2025-26, model outputs)
-- **Drop anchor expands JJJ's safe roaming depth.** Relative to a switch, drop coverage adds 1 to 3.6 ft of safe depth (mean +2.6 ft for drivers 15 to 22 ft from the rim), worth about 2.5 points per 100 rim attempts from the wing and 8.8 from the short corner.
+- **Drop anchor expands JJJ's safe roaming depth.** Relative to a switch, drop coverage adds about 1 to 3 ft of safe depth on average by region, up to 3.7 ft at the maximum (mean +2.7 ft for drivers 15 to 22 ft from the rim), worth about 3 points per 100 rim attempts from the wing and 8.8 from the short corner.
 
 - **JJJ's rim suppression survives shrinkage.** Raw 53.7% on 270 attempts; Empirical Bayes posterior 55.0% (95% CI 49.4% to 60.6%).
 
