@@ -30,7 +30,7 @@ Open `main.ipynb` for the Executive Analytics Brief. It contains the Empirical B
 pip install -r requirements.txt
 jupyter lab main.ipynb
 ```
-Run from the repository root. Data loads from `data/` when cached; otherwise it is fetched from the NBA API. The notebook fixes the random seed (7), so the Monte Carlo figures reproduce. The two court grids take roughly a minute and a half to compute.
+Run from the repository root. Data loads from `data/` when cached; otherwise it is fetched from the NBA API. The notebook fixes the random seed (6767), so the Monte Carlo figures reproduce. The two court grids take roughly a minute and a half to compute.
 
 ## Method in brief
 1. **Empirical Bayes.** A Beta prior is fit by method of moments on defenders with >= 10 games and >= 50 rim attempts (mean 65.0%, Beta(23.25, 12.54), about 36 pseudo-attempts). Each defender's posterior combines the prior with his makes and misses.
