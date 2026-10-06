@@ -5,7 +5,7 @@ import matplotlib.patches as patches
 import scipy.stats as stats
 import pandas as pd
 from matplotlib.axes import Axes
-from matplotlib.colors import ListedColormap
+from matplotlib.colors import LinearSegmentedColormap
 from nba_api.stats.endpoints import leaguedashptdefend
 
 # ---------------------------------------
@@ -50,8 +50,8 @@ JAZZ_FRONTCOURT_IDS = [
 ]
 
 # Custom colormap for Jazz-themed visualizations
-jazz_colors = ['#31006F', '#00A9E0', "#062553"]
-jazz_cmap = ListedColormap(jazz_colors, name='utah_jazz')
+jazz_colors = ['#31006F', '#00A9E0', '#062553']
+jazz_cmap = LinearSegmentedColormap.from_list('utah_jazz', jazz_colors, N=256)
 
 # Note... as much as it pains me, I will be sticking to American register and units for this project, since the NBA is an American league and all the data is in imperial units
 
@@ -427,7 +427,6 @@ def plot_empirical_bayes_forest(
             tick_label.set_color("#4B0082") # Bold Utah player names on the y-axis
 
     ax.set_xlabel("Opponent Rim FG% Allowed (< 6 ft)")
-    ax.set_title("Empirical Bayes Rim Protection: Utah Frontcourt vs. Top 12 NBA")
     ax.grid(axis="x", linestyle=":", alpha=0.5)
     ax.legend(loc="lower right")
 
@@ -445,7 +444,7 @@ def plot_zone_roam_surface(
 
     draw_nba_halfcourt(ax=ax, color="black", lw=1.5, zorder=10) # Draw the NBA half-court on the axes
 
-    levels = np.linspace(7.5, 23.75, 14)
+    levels = np.linspace(7.5, 23.75, 200) # Define contour levels for the optimal roam depth surface
     cf = ax.contourf(
         x_coords,
         y_coords,
@@ -472,6 +471,7 @@ def plot_zone_roam_surface(
     ax.clabel(cs, inline=True, fontsize=9, fmt="%.0f ft")
 
     cbar = plt.colorbar(cf, ax=ax, fraction=0.046, pad=0.04)
+    cbar.set_ticks([8, 12, 16, 20, 23.75])
     cbar.set_label("Max Safe Roaming Depth d* (ft from Rim)", fontsize=10)
 
     ax.set_title(f"JJJ Spatial Roaming Tether Surface — {scheme_label}", fontsize=12, fontweight="bold")
