@@ -3,7 +3,7 @@ The Utah Jazz Rim Protection and Frontcourt Pairing Model
 
 An NBA defensive analytics framework combining Empirical Bayes modeling with a stochastic kinematic simulation to optimize weak-side help rotations across Utah Jazz frontcourt pairings. Built quickly and specifically to boost an application to the Basketball Analytics Intern position with the Utah Jazz.
 
-The compiled report can be found on my cloud [here](https://cloud.kaiwave.dev/s/ZjH9qaZKYAPYGWz)
+> **Status:** Complete. The entire report has been written up and published on [cloud.kaiwave.dev](https://cloud.kaiwave.dev/s/ZjH9qaZKYAPYGWz) - with a card on [kaiwave.dev/projects](https://kaiwave.dev/projects/). 
 
 ## Intro
 Open `main.ipynb` for the Executive Analytics Brief. It contains the Empirical Bayes rim baselines, roaming-depth heatmaps, and the frontcourt EV table. Rendered figures and the table are also saved in `assets/`.
